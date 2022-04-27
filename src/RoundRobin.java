@@ -1,13 +1,13 @@
 /*
- * NAME: TODO
- * PID: TODO
+ * NAME: Thomas Chen
+ * PID: A15636810
  */
 
 /**
- * TODO
  *
- * @author TODO
- * @since TODO
+ *
+ * @author Thomas Chen
+ * @since 1.8
  */
 public class RoundRobin {
 

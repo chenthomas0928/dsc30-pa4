@@ -6,7 +6,7 @@
 import java.util.AbstractList;
 
 /**
- * TODO
+ *
  * @author Thomas Chen
  * @since 1.8
  */
@@ -32,7 +32,7 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
          */
         private Node(T element) {
             this.data = element;
-            // TODO: complete constructor
+
         }
 
         /**
@@ -43,7 +43,7 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
          * @param prevNode predecessor Node, can be null
          */
         private Node(T element, Node nextNode, Node prevNode) {
-            // TODO: complete implementation
+
             this.data = element;
             this.next = nextNode;
             this.prev = prevNode;
@@ -55,7 +55,7 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
          * @param element new element
          */
         public void setElement(T element) {
-            // TODO: complete implementation
+
             this.data = element;
         }
 
@@ -63,7 +63,7 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
          * Accessor to get the Nodes Element
          */
         public T getElement() {
-            // TODO: complete implementation
+
             return this.data;
         }
 
@@ -73,7 +73,7 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
          * @param n new next node
          */
         public void setNext(Node n) {
-            // TODO: complete implementation
+
             this.next = n;
         }
 
@@ -83,7 +83,7 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
          * @return the successor node
          */
         public Node getNext() {
-            // TODO: complete implementation
+
             return this.next;
         }
 
@@ -93,7 +93,7 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
          * @param p new previous node
          */
         public void setPrev(Node p) {
-            // TODO: complete implementation
+
             this.prev = p;
         }
 
@@ -104,7 +104,7 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
          * @return predecessor node
          */
         public Node getPrev() {
-            // TODO: complete implementation
+
             return this.prev;
         }
 
@@ -113,7 +113,7 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
          * Update previous and next nodes
          */
         public void remove() {
-            // TODO: complete implementation
+
             this.getPrev().setNext(this.getNext());
             this.getNext().setPrev(this.getPrev());
         }
@@ -123,12 +123,13 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
      * Creates a new, empty doubly-linked list.
      */
     public DoublyLinkedList() {
-        // TODO: complete default constructor
+
 
         this.head = new Node(null);
         this.tail = new Node(null);
         head.setNext(tail);
         tail.setPrev(head);
+        this.nelems = 0;
 
     }
 
@@ -141,14 +142,13 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
      */
     @Override
     public boolean add(T element) throws NullPointerException {
-        // TODO: Implementation for throwing exceptions followed by
         // implementation of adding the new data
         Node newNode = new Node(element);
         this.tail.getPrev().setNext(newNode);
         newNode.setPrev(this.tail.getPrev());
         newNode.setNext(this.tail);
         this.tail.setPrev(newNode);
-
+        this.nelems++;
         return true;
     }
 
@@ -157,12 +157,15 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
      * Adds an element to a certain index in the list, shifting exist elements
      * create room. Does not accept null values.
      *
-     * TODO: Javadoc comments
+     *
+     * @param index of the position data is added
+     * @param element data to be added
+     * @throws IndexOutOfBoundsException if index is out of bound
+     * @throws NullPointerException if data received is null
      */
     @Override
     public void add(int index, T element)
             throws IndexOutOfBoundsException, NullPointerException {
-        // TODO: Implementation for throwing exceptions followed by
         // implementation of adding the new data
         Node newNode = new Node(element);
         Node temp = this.head;
@@ -176,6 +179,7 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
         newNode.setPrev(temp.getPrev());
         newNode.setNext(temp);
         temp.setPrev(newNode);
+        this.nelems++;
     }
 
     /**
@@ -183,20 +187,21 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
      */
     @Override
     public void clear() {
-        // TODO: implement clear
         this.head.setNext(this.tail);
         this.tail.setPrev(this.head);
+        this.nelems = 0;
     }
 
     /**
      * Determine if the list contains the data element anywhere in the list.
      *
-     * TODO: Javadoc comments
+     *
+     * @param element the data element that is checked
+     * @return whether or not the list contains the data element
      */
     @Override
     public boolean contains(Object element) {
         T data = (T)element;
-        // TODO: Fill in implementation
         Boolean check = false;
         Node temp = this.head;
         while (temp != null) {
@@ -211,78 +216,144 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
     /**
      * Retrieves the element stored with a given index on the list.
      *
-     * TODO: Javadoc comments
+     *
+     * @param index of the element in the list
+     * @return data of the element at input index
+     * @throws IndexOutOfBoundsException if the index is out of bound
      */
     @Override
     public T get(int index) throws IndexOutOfBoundsException {
-        // TODO: Fill in implementation to get the node at index
-        return null;
+
+        if (index > this.nelems) {
+            throw new IndexOutOfBoundsException();
+        }
+        Node temp = this.head;
+        for (int i = 0; i <= index; i++) {
+            temp = temp.getNext();
+        }
+        return temp.data;
     }
 
     /**
      * Helper method to get the Nth node in our list
      *
-     * TODO: Javadoc comments
+     *
+     * @param index of the element in the list
+     * @return Node at input index
+     * @throws IndexOutOfBoundsException if the index is out of bound
      */
     private Node getNth(int index) {
-        // TODO: implement
-        return null;
+
+        if (index > this.nelems) {
+            throw new IndexOutOfBoundsException();
+        }
+        Node temp = this.head;
+        for (int i = 0; i <= index; i++) {
+            temp = temp.getNext();
+        }
+
+        return temp;
     }
 
     /**
      * Determine if the list empty
      *
-     * TODO: javadoc comments
+     *
+     * @return if the list is empty or not
      */
     @Override
     public boolean isEmpty() {
-        // TODO: implement isEmpty
-        return true;
+
+        if (this.nelems == 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     /**
      * Remove the element from position index in the list
      *
-     * TODO: javadoc comments
+     *
+     * @param index the position of the element
+     * @return data of the element that is removed
+     * @throws IndexOutOfBoundsException if index is out of bound
      */
     @Override
     public T remove(int index) throws IndexOutOfBoundsException {
-        // TODO: Fill in implementation
-        return null;
+
+        if (index > this.nelems) {
+            throw new IndexOutOfBoundsException();
+        }
+        Node temp = this.head;
+        for (int i = 0; i <= index; i++) {
+            temp = temp.getNext();
+        }
+        temp.getPrev().setNext(temp.getNext());
+        temp.getNext().setPrev(temp.getPrev());
+        this.nelems--;
+        return temp.data;
     }
 
     /**
      * Set the value of an element at a certain index in the list.
      *
-     * TODO: javadoc comments
+     *
+     * @param index of the element that is reset
+     * @param element the new element of the data
+     * @return original element of the data
+     * @throws IndexOutOfBoundsException if index is out of bound
+     * @throws NullPointerException if data received is null
      */
     @Override
     public T set(int index, T element)
             throws IndexOutOfBoundsException, NullPointerException {
-        // TODO: Fill in implmentation
-        return null;
+
+        if (index > this.nelems) {
+            throw new IndexOutOfBoundsException();
+        }
+        if (element == null) {
+            throw new NullPointerException();
+        }
+        Node temp = this.head;
+        for (int i = 0; i <= index; i++) {
+            temp = temp.getNext();
+        }
+        T original = temp.data;
+        temp.data = element;
+        return original;
     }
 
     /**
      * Retrieves the amount of elements that are currently on the list.
      *
-     * TODO: javadoc comments
+     *
+     * @return the size of the list
      */
     @Override
     public int size() {
-        // TODO: complete implementation
-        return 0;
+
+        return this.nelems;
     }
 
     /**
      * String representation of this list in the form of:
      * "[(head) -> elem1 -> elem2 -> ... -> elemN -> (tail)]"
      *
-     * TODO: javadoc comments
+     *
+     * @return elements in the list in special string format
      */
     @Override
     public String toString() {
-        return null;
+        String result = "[(head) -> ";
+        Node temp = this.head;
+        for (int i = 0; i < this.nelems; i++) {
+            temp = temp.getNext();
+            result += temp.getElement() + " -> ";
+        }
+        result += "(tail)]";
+        return result;
     }
 
     /* ==================== EXTRA CREDIT ==================== */
